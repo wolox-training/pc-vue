@@ -7,7 +7,6 @@
       form.form(@submit.prevent='onSubmit')
         input-field.field(v-for='(field, name) in fields' :key='name' :name='name' v-bind='field' v-model='field.value')
         button.button.submit-button(type="submit") Sign up
-      //- .separator
       button.button.secondary-button(type="button") Login
 </template>
 
@@ -84,12 +83,12 @@ export default {
     position: relative;
     &::after {
       background-color: $dark-grey;
-      position: absolute;
-      height: 3px;
-      top: 50px;
-      left: 0;
-      width: 100%;
       content: '';
+      height: 3px;
+      left: 0;
+      position: absolute;
+      top: 50px;
+      width: 100%;
     }
   }
 </style>
