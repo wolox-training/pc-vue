@@ -5,20 +5,21 @@
       h1.title BOOKS
     .main
       form.form(@submit.prevent='onSubmit')
-        input-field.field(v-for='(field, name) in fields' :key='name' :name='name' v-bind='field' v-model='field.value')
+        .field(v-for='(field, name) in fields' :key='name')
+          label.label(
+            v-if='field.label'
+            :for='name'
+          )
+            | {{ field.label }}
+          input.input(:id='name' v-model='field.value' :type='field.type')
         button.button.submit-button(type="submit") Sign up
       button.button.secondary-button(type="button") Login
 </template>
 
 <script>
 
-import InputField from '@/components/InputField'
-
 export default {
   name: 'register',
-  components: {
-    InputField
-  },
   data () {
     return {
       fields: {
@@ -92,5 +93,11 @@ export default {
       top: 50px;
       width: 100%;
     }
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 700;
+    padding-left: 5px;
   }
 </style>
