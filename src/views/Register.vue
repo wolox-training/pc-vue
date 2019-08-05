@@ -14,7 +14,7 @@
           :errors='submitError && $v.fields[name] && $v.fields[name].value'
         )
         button.button.submit-button(type="submit") Sign up
-      .separator
+      //- .separator
       button.button.secondary-button(type="button") Login
 </template>
 
@@ -102,7 +102,16 @@ export default {
   }
 
   .submit-button {
-    margin-top: 15px;
+    margin: 15px 0 40px;
+    position: relative;
+    &::after {
+      background-color: $dark-grey;
+      position: absolute;
+      height: 3px;
+      top: 50px;
+      left: 0;
+      width: 100%;
+      content: '';
+    }
   }
-
 </style>

@@ -41,11 +41,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
   .label {
     font-size: 12px;
     font-weight: 700;
     padding-left: 5px;
   }
-
 </style>
