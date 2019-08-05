@@ -5,15 +5,23 @@
       h1.title BOOKS
     .main
       form.form(@submit.prevent='onSubmit')
-        input-field.field(v-for='(field, name) in fields' :key='name' :name='name' v-bind='field' v-model='field.value')
+        input-field.field(
+          v-for='(field, name) in fields'
+          :key='name'
+          :name='name'
+          v-bind='field'
+          v-model='field.value'
+          :errors='submitError && $v.fields[name] && $v.fields[name].value'
+        )
         button.button.submit-button(type="submit") Sign up
       .separator
       button.button.secondary-button(type="button") Login
 </template>
 
 <script>
-
+import { required, email } from 'vuelidate/lib/validators'
 import InputField from '@/components/InputField'
+import { passwordValidation as password } from '@/utils/validations'
 
 export default {
   name: 'register',
@@ -27,12 +35,26 @@ export default {
         lastName: { label: 'Last name', value: null },
         email: { label: 'Email', value: null },
         password: { label: 'Password', value: null, type: 'password' }
-      }
+      },
+      submitError: false
     }
   },
   methods: {
     onSubmit () {
-      console.log(JSON.parse(JSON.stringify(this.fields)))
+      this.$v.$touch()
+      console.log(this)
+      if (this.$v.$invalid) {
+        this.submitError = true
+      } else {
+        this.submitError = false
+        console.log(JSON.parse(JSON.stringify(this.fields)))
+      }
+    }
+  },
+  validations: {
+    fields: {
+      email: { value: { required, email } },
+      password: { value: { required, password } }
     }
   }
 }
