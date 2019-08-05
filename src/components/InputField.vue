@@ -13,7 +13,10 @@
 export default {
   name: 'InputField',
   props: {
-    name: String,
+    name: {
+      type: String,
+      required: true
+    },
     label: String,
     value: String,
     type: {
