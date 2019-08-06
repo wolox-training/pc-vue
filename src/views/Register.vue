@@ -22,6 +22,7 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators'
 import { passwordValidation as password } from '@/utils/validations'
+import { createUser } from '@/services/userService'
 
 export default {
   name: 'register',
@@ -42,8 +43,9 @@ export default {
       if (this.$v.$invalid) {
         this.submitError = true
       } else {
+        const { firstName, lastName, email, password } = this.fields
         this.submitError = false
-        console.log(JSON.parse(JSON.stringify(this.fields)))
+        createUser(firstName.value, lastName.value, email.value, password.value)
       }
     }
   },
