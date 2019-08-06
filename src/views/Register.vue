@@ -14,7 +14,7 @@
           input.input(:id='name' v-model='field.value' :type='field.type' :errors='submitError && $v.fields[name] && $v.fields[name].value')
           .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.required) !== "undefined" && !$v.fields[name].value.required') Este campo es requerido
           .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.email) !== "undefined" && !$v.fields[name].value.email') Debe tener formato de email
-          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.password) !== "undefined" && !$v.fields[name].value.password') Debe tener formato de password
+          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.password) !== "undefined" && !$v.fields[name].value.password') Debe contener una mayúscula y un número
         button.button.submit-button(type="submit") Sign up
       button.button.secondary-button(type="button") Login
 </template>
@@ -39,7 +39,6 @@ export default {
   methods: {
     onSubmit () {
       this.$v.$touch()
-      console.log(this)
       if (this.$v.$invalid) {
         this.submitError = true
       } else {
@@ -53,9 +52,6 @@ export default {
       email: { value: { required, email } },
       password: { value: { required, password } }
     }
-  },
-  computed () {
-
   }
 }
 
@@ -100,7 +96,8 @@ export default {
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    padding: 5px 0;
+    padding: 10px 0;
+    position: relative;
   }
 
   .submit-button {
@@ -121,5 +118,12 @@ export default {
     font-size: 12px;
     font-weight: 700;
     padding-left: 5px;
+  }
+
+  .error {
+    position: absolute;
+    font-size: 12px;
+    color: $red;
+    bottom: -5px;
   }
 </style>
