@@ -5,28 +5,26 @@
       h1.title BOOKS
     .main
       form.form(@submit.prevent='onSubmit')
-        input-field.field(
-          v-for='(field, name) in fields'
-          :key='name'
-          :name='name'
-          v-bind='field'
-          v-model='field.value'
-          :errors='submitError && $v.fields[name] && $v.fields[name].value'
-        )
+        .field(v-for='(field, name) in fields' :key='name')
+          label.label(
+            v-if='field.label'
+            :for='name'
+          )
+            | {{ field.label }}
+          input.input(:id='name' v-model='field.value' :type='field.type' :errors='submitError && $v.fields[name] && $v.fields[name].value')
+          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.required) !== "undefined" && !$v.fields[name].value.required') Este campo es requerido
+          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.email) !== "undefined" && !$v.fields[name].value.email') Debe tener formato de email
+          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.password) !== "undefined" && !$v.fields[name].value.password') Debe tener formato de password
         button.button.submit-button(type="submit") Sign up
       button.button.secondary-button(type="button") Login
 </template>
 
 <script>
 import { required, email } from 'vuelidate/lib/validators'
-import InputField from '@/components/InputField'
 import { passwordValidation as password } from '@/utils/validations'
 
 export default {
   name: 'register',
-  components: {
-    InputField
-  },
   data () {
     return {
       fields: {
@@ -55,6 +53,9 @@ export default {
       email: { value: { required, email } },
       password: { value: { required, password } }
     }
+  },
+  computed () {
+
   }
 }
 
@@ -71,6 +72,8 @@ export default {
   }
 
   .header {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
   }
 
@@ -112,5 +115,11 @@ export default {
       top: 50px;
       width: 100%;
     }
+  }
+
+  .label {
+    font-size: 12px;
+    font-weight: 700;
+    padding-left: 5px;
   }
 </style>
