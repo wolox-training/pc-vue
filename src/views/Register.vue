@@ -7,16 +7,16 @@
       form.form(@submit.prevent='onSubmit')
         .field(v-for='(field, name) in fields' :key='name')
           label.label(
-            v-if='field.label'
             :for='name'
           )
-            | {{ field.label }}
+            | {{ $t(`register['${name}']`) }}
           input.input(:id='name' v-model='field.value' :type='field.type' :errors='submitError && $v.fields[name] && $v.fields[name].value')
-          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.required) !== "undefined" && !$v.fields[name].value.required') Este campo es requerido
-          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.email) !== "undefined" && !$v.fields[name].value.email') Debe tener formato de email
-          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.password) !== "undefined" && !$v.fields[name].value.password') Debe contener una mayúscula y un número
-        button.button.submit-button(type="submit") Sign up
-      button.button.secondary-button(type="button") Login
+
+          .error(v-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.required) !== "undefined" && !$v.fields[name].value.required') {{ $t("errors.validation.required") }}
+          .error(v-else-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.email) !== "undefined" && !$v.fields[name].value.email') {{ $t("errors.validation.email") }}
+          .error(v-else-if='submitError && $v.fields[name] && $v.fields[name].value && typeof($v.fields[name].value.$params.password) !== "undefined" && !$v.fields[name].value.password') {{ $t("errors.validation.password") }}
+        button.button.submit-button(type="submit") {{ $t("register.signUp") }}
+      button.button.secondary-button(type="button") {{ $t("register.login") }}
 </template>
 
 <script>
@@ -29,12 +29,13 @@ export default {
   data () {
     return {
       fields: {
-        firstName: { label: 'First name', value: null },
-        lastName: { label: 'Last name', value: null },
-        email: { label: 'Email', value: null },
-        password: { label: 'Password', value: null, type: 'password' }
+        firstName: { value: null },
+        lastName: { value: null },
+        email: { value: null },
+        password: { value: null, type: 'password' }
       },
-      submitError: false
+      submitError: false,
+      validateErrors: ['required', 'email', 'password']
     }
   },
   methods: {
