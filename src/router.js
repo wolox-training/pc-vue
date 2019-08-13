@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Register from './views/Register.vue'
+
+const Register = () => import('./views/Register.vue')
 
 Vue.use(Router)
 
