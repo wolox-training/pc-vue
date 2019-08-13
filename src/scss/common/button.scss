@@ -1,0 +1,19 @@
+@import '../variables/colors';
+
+.button {
+  padding: 0;
+  width: 100%;
+  height: 35px;
+  box-sizing: border-box;
+  border: $green 3px solid;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: $white;
+  background-color: $green;
+}
+
+.secondary-button {
+  color: $green;
+  background-color: transparent;
+}
